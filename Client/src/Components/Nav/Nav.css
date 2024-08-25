@@ -1,19 +1,18 @@
-
-.nav-link{
-    font-size: 18px !important;
-    font-weight: 500;
-    transition: all 0.3s ease-in-out;
+.nav-link {
+  font-size: 18px !important;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
 }
-.nav-link:hover{
-    color: #0B8494 !important;
+.nav-link:hover {
+  color: #0b8494 !important;
 }
-.btn-outline-primary{
-    border: 1px solid #0B8494;
-    color: #0B8494 !important;
-    transition: all 0.3s ease-in-out;
+.btn-outline-primary {
+  border: 1px solid #0b8494;
+  color: #0b8494 !important;
+  transition: all 0.3s ease-in-out;
 }
-.btn-outline-primary:hover{
-    background-color: #0B8494 !important;
-    color: #FFFFFF !important;
-    border: 1px solid #0B8494;
+.btn-outline-primary:hover {
+  background-color: #0b8494 !important;
+  color: #ffffff !important;
+  border: 1px solid #0b8494;
 }

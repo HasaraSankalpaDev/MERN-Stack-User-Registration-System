@@ -1,8 +1,8 @@
-.btn-light{
-    background: #006a7a !important;
-    transition: all 0.2s ease-in-out;
+.btn-light {
+  background: #006a7a !important;
+  transition: all 0.2s ease-in-out;
 }
-.btn-light:hover{
-    background: #005261 !important;
-    
+.btn-light:hover {
+  background: #005261 !important;
 }
+ 

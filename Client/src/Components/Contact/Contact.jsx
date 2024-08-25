@@ -4,9 +4,9 @@ import Nav from '../Nav/Nav'
 function Contact() {
   return (
     <div>
-       <Nav />
+      <Nav />
       <div className="container mt-5">
-      <h3>Contact Us Page</h3>
+        <h3>Contact Us Page</h3>
       </div>
     </div>
   )

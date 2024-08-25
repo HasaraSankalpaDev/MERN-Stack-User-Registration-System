@@ -4,9 +4,9 @@ import Nav from '../Nav/Nav'
 function Home() {
   return (
     <div>
-       <Nav />
+      <Nav />
       <div className="container mt-5">
-      <h3>Home Page</h3>
+        <h3>Home Page</h3>
       </div>
     </div>
   )

@@ -1,6 +1,6 @@
 import React from 'react'
 import Nav from './Components/Nav/Nav'
-import { Routes, Route } from'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from './Components/Home/Home'
 import Register from './Components/Register/Register';
 import Login from './Components/Login/Login';
@@ -13,12 +13,12 @@ function App() {
 
       <React.Fragment>
         <Routes>
-          <Route path='/' element={<Home/>}/>
-          <Route path='/home' element={<Home/>}/>
-          <Route path='/contact' element={<Contact/>}/>
-          <Route path='/gallery' element={<Gallery/>}/>
-          <Route path='/register' element={<Register/>}/>
-          <Route path='/login' element={<Login/>}/>
+          <Route path='/' element={<Home />} />
+          <Route path='/home' element={<Home />} />
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/gallery' element={<Gallery />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<Login />} />
         </Routes>
       </React.Fragment>
 
