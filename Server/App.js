@@ -42,6 +42,23 @@ app.post("/register", async (req, res) => {
     console.error(err);
   }
 });
+require("./Model/UserRegister");
+
+app.get("/register", async (req, res,next) => {
+  let user;
+  try{
+      user = await User.find({});
+  }catch(err){
+   console.error(err);
+  }
+
+  if(!user) {
+      return res.status(400).json({message: "No user found"});
+  }
+  res.json(user);
+});
+
+
 
 // User Login Part
 app.post("/login", async (req, res) => {

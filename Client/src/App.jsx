@@ -6,6 +6,7 @@ import Register from './Components/Register/Register';
 import Login from './Components/Login/Login';
 import Contact from './Components/Contact/Contact';
 import Gallery from './Components/Gallery/Gallery';
+import AdminPage from './Components/AdminPage/AdminPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/gallery' element={<Gallery />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/admin' element={<AdminPage />} />
         </Routes>
       </React.Fragment>
 
