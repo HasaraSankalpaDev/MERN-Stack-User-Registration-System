@@ -46,7 +46,7 @@ function AdminPage() {
                 <tr>
                   <th scope="row" className='px-3'>{user.uName}</th>
                   <td>{user.uEmail}</td>
-                  <td>{user.uPass}</td>
+                  <td>{user.uType}</td>
                 </tr>
               ))}
 

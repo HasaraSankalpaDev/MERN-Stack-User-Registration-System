@@ -1,4 +1,3 @@
-// fpInEZKkxEkx5Ppz
 const express = require("express");
 const mongoose = require("mongoose");
 const router = require("./Routes/UserRoutes");
@@ -11,142 +10,87 @@ app.use(express.json());
 app.use(cors());
 app.use("/users", router);
 
-// connecting to database
+// Connecting to Database
 mongoose
   .connect(
     "mongodb+srv://admin:fpInEZKkxEkx5Ppz@mernusermanagementsyste.pmdy3.mongodb.net/"
   )
-  .then(() => console.log("Connected To Mongo DB"))
+  .then(() => console.log("Connected to MongoDB"))
   .then(() => {
-    app.listen(8000);
+    app.listen(8000, () => {
+      console.log("Server is running on port 8000");
+    });
   })
-
-  .catch((err) => console.error(err));
+  .catch((err) => console.error("Database connection error:", err));
 
 // User Registration Part
 require("./Model/UserRegister");
 const User = mongoose.model("UserRegister");
+
 app.post("/register", async (req, res) => {
-  const { uName, uEmail, uPass } = req.body;
+  const { uName, uEmail, uPass, uType } = req.body;
+  
   if (!uName || !uEmail || !uPass) {
     return res.status(400).json({ error: "All fields are required." });
   }
+
   try {
-    await User.create({
+    const newUser = await User.create({
       uName,
       uEmail,
       uPass,
+      uType,
     });
-    res.send("User Created Successfully");
+    res.status(201).json({ message: "User Created Successfully", user: newUser });
   } catch (err) {
-    console.error(err);
+    console.error("Error during user registration:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
-require("./Model/UserRegister");
 
-app.get("/register", async (req, res,next) => {
-  let user;
-  try{
-      user = await User.find({});
-  }catch(err){
-   console.error(err);
-  }
+app.get("/register", async (req, res) => {
+  try {
+    const users = await User.find({});
+    
+    if (users.length === 0) {
+      return res.status(404).json({ message: "No users found" });
+    }
 
-  if(!user) {
-      return res.status(400).json({message: "No user found"});
+    res.status(200).json(users);
+  } catch (err) {
+    console.error("Error fetching users:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
-  res.json(user);
 });
-
-
 
 // User Login Part
 app.post("/login", async (req, res) => {
   const { uEmail, uPass } = req.body;
+
+  if (!uEmail || !uPass) {
+    return res.status(400).json({ error: "Both email and password are required" });
+  }
+
   try {
     const user = await User.findOne({ uEmail });
 
     if (!user) {
-      res.json("User Not Found");
+      // User not found
+      return res.status(404).json({ status: "notFound" });
     }
 
-    if (user.uPass === uPass) {
-      res.json({ status: "ok" });
-    } else {
-      res.json("Incorrect User Name Or Email");
+    if (user.uPass !== uPass) {
+      // Incorrect password
+      return res.status(401).json({ status: "pwsError" });
     }
+
+    // User found and password is correct
+    const responseMessage = user.uType === "User" ? "Found User" : "Found Admin";
+    return res.status(200).json({ status: "ok", message: responseMessage });
+    
   } catch (err) {
-    console.error(err);
-    res.json("Server Error");
+    // Handle server error
+    console.error("Error during login:", err);
+    return res.status(500).json({ error: "Server Error" });
   }
 });
-// const express = require("express");
-// const mongoose = require("mongoose");
-// const router = require("./Routes/UserRoutes");
-
-// const app = express();
-// const cors = require("cors");
-
-// // Setup Middlewares
-// app.use(express.json());
-// app.use(cors());
-// app.use("/users", router);
-
-// // connecting to database
-// mongoose
-//   .connect(
-//     process.env.MONGODB_URI || "mongodb+srv://admin:fpInEZKkxEkx5Ppz@mernusermanagementsyste.pmdy3.mongodb.net/",
-//     { useNewUrlParser: true, useUnifiedTopology: true }
-//   )
-//   .then(() => console.log("Connected To MongoDB"))
-//   .then(() => {
-//     app.listen(8000, () => console.log("Server running on port 8000"));
-//   })
-//   .catch((err) => console.error("Database connection error:", err));
-
-// // User Registration Model
-// require("./Model/UserRegister");
-// const User = mongoose.model("UserRegister");
-
-// // User Registration Route
-// app.post("/register", async (req, res) => {
-//   const { uName, uEmail, uPass } = req.body;
-
-//   if (!uName || !uEmail || !uPass) {
-//     return res.status(400).json({ error: "All fields are required." });
-//   }
-
-//   try {
-//     await User.create({ uName, uEmail, uPass });
-//     res.status(201).json({ message: "User Created Successfully" });
-//   } catch (err) {
-//     console.error("Error creating user:", err);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
-
-// // User Login Route
-// app.post("/login", async (req, res) => {
-//   const { uEmail, uPass } = req.body;
-
-//   if (!uEmail || !uPass) {
-//     return res.status(400).json({ error: "Both email and password are required." });
-//   }
-
-//   try {
-//     const user = await User.findOne({ uEmail });
-
-//     if (!user) {
-//       return res.status(404).json({ error: "User Not Found" });
-//     }
-
-//     if (user.uPass === uPass) {
-//       return res.status(200).json({ status: "ok", message: "Login Successful" });
-//     } else {
-//       return res.status(401).json({ error: "Incorrect Password" });
-//     }
-//   } catch (err) {
-//     console.error("Error during login:", err);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
