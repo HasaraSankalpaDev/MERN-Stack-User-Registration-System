@@ -3,12 +3,14 @@ const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
 const cors = require("cors");
 const User = require("./Model/UserRegister");
+const router = require("./Routes/UserRoutes")
 
 const app = express();
 
 // Setup Middlewares
 app.use(express.json());
 app.use(cors());
+app.use("/register", router);
 
 // Connecting to Database
 mongoose
@@ -27,7 +29,7 @@ app.post("/register", async (req, res) => {
 
   // Validate input
   if (!uName || !uEmail || !uPass) {
-    return res.status(400).json({ error: "All fields are required." });
+    return res.json({ message: "All fields are required" });
   }
 
   try {
@@ -80,7 +82,6 @@ app.post("/login", async (req, res) => {
     return res.status(400).json({ error: "Both email and password are required" });
   }
 
-  // Hashing Password
 
   try {
     const user = await User.findOne({ uEmail });
@@ -97,7 +98,8 @@ app.post("/login", async (req, res) => {
 
     // User found and password is correct
     const responseMessage = user.uType === "User" ? "Found User" : "Found Admin";
-    return res.status(200).json({ status: "ok", message: responseMessage });
+    const uId = user._id;
+    return res.status(200).json({ status: "ok", message: responseMessage , uId });
   } catch (err) {
     console.error("Error during login:", err);
     return res.status(500).json({ error: "Server Error" });

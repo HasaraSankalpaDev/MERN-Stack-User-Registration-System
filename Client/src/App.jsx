@@ -7,6 +7,7 @@ import Login from './Components/Login/Login';
 import Contact from './Components/Contact/Contact';
 import Gallery from './Components/Gallery/Gallery';
 import AdminPage from './Components/AdminPage/AdminPage';
+import ViewUser from './Components/ViewUserPage/ViewUser';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/admin' element={<AdminPage />} />
+          <Route path='/view' element={<ViewUser />} />
         </Routes>
       </React.Fragment>
 

@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Correct import for useNavigate
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Nav from '../Nav/Nav';
 import './Register.css';
 
 function Register() {
-    // Create User Navigate Function
     const navigate = useNavigate();
 
-    // Error Handling
     const [logError, setLogError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState();
+    const [errorMessage, setErrorMessage] = useState('');
 
-    // Set Register Data
     const [user, setUser] = useState({
         uName: "",
         uEmail: "",
@@ -27,21 +24,26 @@ function Register() {
     };
 
     // Handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        sendRequest()
-            .then((response) => {
-                console.log(response);
-                if (response.error === "User already exists") {
-                    setLogError(true);
-                    setErrorMessage("User Already Exist Please User Another User Name Or Email Address")
-                } else {
-                    navigate('/login'); // navigate to the login page
-                }
-            })
-            .catch((err) => {
-                alert("Error: " + err.message);
-            });
+        try {
+            const response = await sendRequest();
+            console.log(response);
+
+            if (response?.message === "All fields are required") {
+                setLogError(true);
+                setErrorMessage("All Fields Are Required");
+            } else if (response?.error === "User already exists") {
+                setLogError(true);
+                setErrorMessage("User Already Exists. Please use another username or email address.");
+            } else {
+                navigate('/login');
+            }
+        } catch (err) {
+            console.error("Error: ", err);
+            setLogError(true);
+            setErrorMessage("An unexpected error occurred. Please try again.");
+        }
     };
 
     // Function to send the registration request
@@ -53,10 +55,12 @@ function Register() {
                 uPass: user.uPass,
                 uType: "User",
             });
-            return response.data; // Return the response data
+
+            return response.data;
         } catch (error) {
+            // Log the error and re-throw it for handling in handleSubmit
             console.error("Error occurred during the request:", error);
-            throw error; // Handle the error
+            throw new Error(error.response?.data?.message || "Request failed");
         }
     };
 
@@ -66,15 +70,13 @@ function Register() {
             <div className="container">
                 <h3 className='mt-5'>User Registration Page</h3>
                 <form className='mt-5' onSubmit={handleSubmit}>
-                    {logError ? (
+                    {logError && (
                         <div className="mb-3 w-50">
                             <div className="alert alert-danger alert-dismissible fade show" role="alert">
                                 <strong>Oops!</strong> {errorMessage}
                                 <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         </div>
-                    ) : (
-                        <div />
                     )}
 
                     <div className="mb-3 w-50">

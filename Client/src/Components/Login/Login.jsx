@@ -31,13 +31,17 @@ function Login() {
     try {
       const response = await sendRequest();
 
+      console.log(response.uId);
+      setUId(response.uId);
+
+
       // Handle different response statuses
       if (response.status === "ok") {
         // alert("Success");
 
         // Navigate based on the message
         if (response.message === "Found User") {
-          navigate("/view");
+          navigate('/view');
         } else if (response.message === "Found Admin") {
           navigate("/admin");
         } else {
@@ -52,6 +56,8 @@ function Login() {
       } else {
         alert("Unexpected response status");
       }
+      
+
 
     } catch (err) {
       console.error("Error occurred:", err);
@@ -77,6 +83,7 @@ function Login() {
 
   return (
     <div>
+
       <Nav />
       <div className="container">
         <h3 className="mt-5">User Login Page</h3>
@@ -88,7 +95,7 @@ function Login() {
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           </div> : <div className="">
-           
+
           </div>}
 
           <div className="mb-3 w-50">
