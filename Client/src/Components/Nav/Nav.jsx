@@ -14,7 +14,6 @@ function Nav() {
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav d-flex align-items-center ms-auto">
             <Link to="/home" className='text-dark text-decoration-none me-4 nav-link'>Home</Link>
-            <Link to="/admin" className='text-dark text-decoration-none me-4 nav-link'>Admin Page</Link>
             <Link to="/gallery" className='text-dark text-decoration-none me-4 nav-link'>Gallery</Link>
             <Link to="/contact" className='text-dark text-decoration-none me-4 nav-link'>Contact Us</Link>
             <Link to="/register" className='text-dark text-decoration-none me-4 '>

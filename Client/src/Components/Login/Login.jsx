@@ -37,7 +37,7 @@ function Login() {
 
         // Navigate based on the message
         if (response.message === "Found User") {
-          navigate("/contact");
+          navigate("/view");
         } else if (response.message === "Found Admin") {
           navigate("/admin");
         } else {
